@@ -1,52 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Barcode Scanner</title>
-  <script src="https://cdn.jsdelivr.net/npm/quagga"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Reader</title>
 </head>
 <body>
-  <h1>Barcode Scanner</h1>
-  <button id="scan-btn">Scan Barcode</button>
-  <div id="result"></div>
-
-  <script>
-    const scanner = Quagga.default;
-    const scanBtn = document.querySelector('#scan-btn');
-    const resultDiv = document.querySelector('#result');
-
-    // Set up QuaggaJS configuration
-    scanner.init({
-      inputStream : {
-        name : "Live",
-        type : "LiveStream",
-        constraints: {
-          width: {min: 640},
-          height: {min: 480},
-          facingMode: "environment",
-          aspectRatio: {min: 1, max: 2}
-        }
-      },
-      decoder : {
-        readers : ["ean_reader"]
-      }
-    }, function(err) {
-        if (err) {
-            console.error("Error starting Quagga: ", err);
-            return;
-        }
-        console.log("Quagga started successfully");
-    });
-
-    // Add click event listener to scan button
-    scanBtn.addEventListener('click', function() {
-      scanner.start();
-
-      // Listen for barcode detection event
-      scanner.onDetected(function(result) {
-        resultDiv.innerHTML = result.codeResult.code;
-        scanner.stop();
-      });
-    });
-  </script>
+    <div id="interactive" class="viewport"></div>
+    <p>Detected Barcode: <span id="barcode-result">-</span></p>
+    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1"></script>
+    <script src="barcode-reader.js"></script>
 </body>
 </html>
